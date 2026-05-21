@@ -1,0 +1,25 @@
+{
+  "name": "reactconcepts",
+  "version": "1.0.0",
+  "description": "Exploring all react Concepts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sasikanthPerumalla/React-Concepts.git"
+  },
+  "author": "Sriram Sasikanth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sasikanthPerumalla/React-Concepts/issues"
+  },
+  "homepage": "https://github.com/sasikanthPerumalla/React-Concepts#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

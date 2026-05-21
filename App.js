@@ -1,3 +1,5 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
 const heading = React.createElement(
   "div",
   {
@@ -8,5 +10,5 @@ const heading = React.createElement(
     React.createElement("h2", null, "Welcome to ReactJS"),
   ],
 );
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(heading);
+const finalroot = ReactDOM.createRoot(document.getElementById("root"));
+finalroot.render(heading);
