@@ -9,3 +9,6 @@ export const RESTAURANT_LIST_URL =
 
 export const MENU_URL =
   "https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.514720054858962&lng=78.38579021394253&restaurantId=666505";
+
+export const RESTAURANT_BULK_UPLOAD_URL =
+  "http://localhost:8080/api/restaurant/bulk-upload";

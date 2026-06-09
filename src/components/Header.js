@@ -1,6 +1,6 @@
-import { LOGO_URL } from "../utils/references";
 import { useState } from "react";
 import { Link } from "react-router";
+import { LOGO_URL } from "../utils/references";
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("Login");
   return (
@@ -18,6 +18,9 @@ const Header = () => {
           <Link to="/contact">Contact Us</Link>
         </li>
         <li>Cart</li>
+        <li>
+          <Link to="/upload">Upload Restaurants</Link>
+        </li>
         <button
           className="login-btn"
           onClick={() =>

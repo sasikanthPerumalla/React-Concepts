@@ -1,13 +1,12 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import Header from "./src/components/Header";
-import Body from "./src/components/Body";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import "./index.css";
 import About from "./src/components/About";
+import Body from "./src/components/Body";
 import Contact from "./src/components/Contact";
+import Header from "./src/components/Header";
 import RestaurantMenu from "./src/components/RestaurantMenu";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
-import Error from "./src/components/Error";
+import RestaurantUpload from "./src/components/RestaurantUpload";
 
 const AppComponent = () => {
   return (
@@ -38,6 +37,10 @@ const appRouter = createBrowserRouter([
       {
         path: "restaurant/:id",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/upload",
+        element: <RestaurantUpload />,
       },
     ],
   },
