@@ -1,108 +1,99 @@
-import { withConfiguration } from '@pega/cosmos-react-core';
-import type { PConnFieldProps } from './PConnProps';
+import { withConfiguration, Card, CardHeader, CardContent, Flex, Text, Icon } from '@pega/cosmos-react-core';
 import {
-  StyledWidgetContainer,
-  StyledCurrentWeather,
-  StyledSunIcon,
-  StyledCloudOverlay,
-  StyledTemperatureSection,
-  StyledTemperature,
-  StyledDegreeSymbol,
-  StyledTime,
-  StyledConditionText,
-  StyledForecastRow,
-  StyledForecastDay,
-  StyledDayLabel,
-  StyledForecastIcon,
-  StyledTempRange,
-  StyledIconContainer
+  StyledWeatherContainer,
+  StyledTemperatureDisplay,
+  StyledDetailRow,
+  StyledConditionText
 } from './styles';
 
-interface WeatherWidgetProps extends PConnFieldProps {
+interface WeatherWidgetProps {
   heading?: string;
-  temperature?: string;
-  weatherCondition?: string;
-  currentTime?: string;
+  locationProperty?: string;
+  temperatureProperty?: string;
+  conditionProperty?: string;
+  humidityProperty?: string;
+  temperatureUnit?: string;
   testId?: string;
+  getPConnect: () => any;
 }
 
-interface ForecastDay {
-  id: string;
-  day: string;
-  iconType: string;
-  tempLow: string;
-  tempHigh: string;
-}
-
-const FORECAST_DATA: ForecastDay[] = [
-  { id: 'thu', day: 'THU', iconType: 'partly-cloudy', tempLow: '18', tempHigh: '20' },
-  { id: 'fri', day: 'FRI', iconType: 'thunderstorm', tempLow: '18', tempHigh: '20' },
-  { id: 'sat', day: 'SAT', iconType: 'fog', tempLow: '18', tempHigh: '20' },
-  { id: 'sun', day: 'SUN', iconType: 'cloudy', tempLow: '18', tempHigh: '20' }
-];
-
-function renderWeatherIcon(iconType: string): JSX.Element {
-  if (iconType === 'partly-cloudy') {
-    return (
-      <StyledForecastIcon>
-        <span role="img" aria-label="partly cloudy">\u26C5</span>
-      </StyledForecastIcon>
-    );
+function getWeatherIconName(condition: string): string {
+  const lowerCondition = condition.toLowerCase();
+  if (lowerCondition.includes('sun') || lowerCondition.includes('clear')) {
+    return 'sun';
   }
-  if (iconType === 'thunderstorm') {
-    return (
-      <StyledForecastIcon>
-        <span role="img" aria-label="thunderstorm">\u26C8\uFE0F</span>
-      </StyledForecastIcon>
-    );
+  if (lowerCondition.includes('cloud') || lowerCondition.includes('overcast')) {
+    return 'cloud';
   }
-  if (iconType === 'fog') {
-    return (
-      <StyledForecastIcon>
-        <span role="img" aria-label="fog">\uD83C\uDF2B\uFE0F</span>
-      </StyledForecastIcon>
-    );
+  if (lowerCondition.includes('rain') || lowerCondition.includes('drizzle')) {
+    return 'warn';
   }
-  return (
-    <StyledForecastIcon>
-      <span role="img" aria-label="cloudy">\u2601\uFE0F</span>
-    </StyledForecastIcon>
-  );
+  if (lowerCondition.includes('snow') || lowerCondition.includes('ice')) {
+    return 'information';
+  }
+  return 'cloud';
 }
 
 function WeatherWidget(props: WeatherWidgetProps) {
   const {
-    temperature = '30',
-    weatherCondition = 'Clear day',
-    currentTime = '07:20',
-    testId
+    heading = 'Weather',
+    locationProperty = '.WeatherLocation',
+    temperatureProperty = '.WeatherTemperature',
+    conditionProperty = '.WeatherCondition',
+    humidityProperty = '.WeatherHumidity',
+    temperatureUnit = 'C',
+    testId = 'weather-widget',
+    getPConnect
   } = props;
 
+  const pConn = getPConnect();
+
+  const location = String(pConn.getValue(locationProperty) || 'Unknown Location');
+  const temperature = pConn.getValue(temperatureProperty);
+  const condition = String(pConn.getValue(conditionProperty) || 'Unknown');
+  const humidity = pConn.getValue(humidityProperty);
+
+  const unitSymbol = temperatureUnit === 'F' ? '°F' : '°C';
+  const temperatureDisplay = temperature !== undefined && temperature !== null && temperature !== ''
+    ? `${temperature}${unitSymbol}`
+    : '--';
+  const humidityDisplay = humidity !== undefined && humidity !== null && humidity !== ''
+    ? `${humidity}%`
+    : '--';
+
+  const iconName = getWeatherIconName(condition);
+
   return (
-    <StyledWidgetContainer data-testid={testId}>
-      <StyledCurrentWeather>
-        <StyledIconContainer>
-          <StyledSunIcon />
-          <StyledCloudOverlay />
-          <StyledConditionText>{weatherCondition}</StyledConditionText>
-        </StyledIconContainer>
-        <StyledTemperatureSection>
-          <StyledTemperature>
-            {temperature}<StyledDegreeSymbol>/0</StyledDegreeSymbol>
-          </StyledTemperature>
-          <StyledTime>{currentTime}</StyledTime>
-        </StyledTemperatureSection>
-      </StyledCurrentWeather>
-      <StyledForecastRow>
-        {FORECAST_DATA.map((day) => (
-          <StyledForecastDay key={day.id}>
-            <StyledDayLabel>{day.day}</StyledDayLabel>
-            {renderWeatherIcon(day.iconType)}
-            <StyledTempRange>{`${day.tempLow}/${day.tempHigh}`}</StyledTempRange>
-          </StyledForecastDay>
-        ))}
-      </StyledForecastRow>
-    </StyledWidgetContainer>
+    <StyledWeatherContainer data-testid={testId}>
+      <Card>
+        <CardHeader>
+          <Text variant="h2">{heading}</Text>
+        </CardHeader>
+        <CardContent>
+          <Flex container={{ direction: 'column', gap: 1 }}>
+            <Flex container={{ direction: 'row', alignItems: 'center', gap: 1 }}>
+              <Icon name={iconName} />
+              <Text variant="h3">{location}</Text>
+            </Flex>
+
+            <StyledTemperatureDisplay>
+              <Text variant="h1">{temperatureDisplay}</Text>
+            </StyledTemperatureDisplay>
+
+            <StyledConditionText>
+              <Text>{condition}</Text>
+            </StyledConditionText>
+
+            <StyledDetailRow>
+              <Flex container={{ direction: 'row', justifyContent: 'space-between' }}>
+                <Text variant="secondary">Humidity</Text>
+                <Text>{humidityDisplay}</Text>
+              </Flex>
+            </StyledDetailRow>
+          </Flex>
+        </CardContent>
+      </Card>
+    </StyledWeatherContainer>
   );
 }
 
