@@ -15,52 +15,67 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    getPConnect: createMockPConnect(),
-    heading: 'Weather Widget',
-    temperature: '30',
-    weatherCondition: 'Clear day',
-    currentTime: '07:20'
+    heading: 'Current Weather',
+    locationProperty: '.WeatherLocation',
+    temperatureProperty: '.WeatherTemperature',
+    conditionProperty: '.WeatherCondition',
+    humidityProperty: '.WeatherHumidity',
+    temperatureUnit: 'C',
+    testId: 'weather-widget-default',
+    getPConnect: createMockPConnect()
   }
 };
 
-export const HotDay: Story = {
+export const Fahrenheit: Story = {
   args: {
+    heading: 'Weather Today',
+    locationProperty: '.WeatherLocation',
+    temperatureProperty: '.WeatherTemperature',
+    conditionProperty: '.WeatherCondition',
+    humidityProperty: '.WeatherHumidity',
+    temperatureUnit: 'F',
+    testId: 'weather-widget-fahrenheit',
     getPConnect: createMockPConnect({
-      '.Temperature': '42',
+      '.WeatherLocation': 'New York, NY',
+      '.WeatherTemperature': 72,
       '.WeatherCondition': 'Sunny',
-      '.CurrentTime': '14:30'
-    }),
-    heading: 'Weather Widget',
-    temperature: '42',
-    weatherCondition: 'Sunny',
-    currentTime: '14:30'
+      '.WeatherHumidity': 45
+    })
   }
 };
 
-export const ColdDay: Story = {
+export const NoData: Story = {
   args: {
+    heading: 'Weather',
+    locationProperty: '.WeatherLocation',
+    temperatureProperty: '.WeatherTemperature',
+    conditionProperty: '.WeatherCondition',
+    humidityProperty: '.WeatherHumidity',
+    temperatureUnit: 'C',
+    testId: 'weather-widget-nodata',
     getPConnect: createMockPConnect({
-      '.Temperature': '5',
-      '.WeatherCondition': 'Overcast',
-      '.CurrentTime': '06:45'
-    }),
-    heading: 'Weather Widget',
-    temperature: '5',
-    weatherCondition: 'Overcast',
-    currentTime: '06:45'
+      '.WeatherLocation': '',
+      '.WeatherTemperature': '',
+      '.WeatherCondition': '',
+      '.WeatherHumidity': ''
+    })
   }
 };
 
-export const RainyDay: Story = {
+export const RainyWeather: Story = {
   args: {
+    heading: 'Rainy Day',
+    locationProperty: '.WeatherLocation',
+    temperatureProperty: '.WeatherTemperature',
+    conditionProperty: '.WeatherCondition',
+    humidityProperty: '.WeatherHumidity',
+    temperatureUnit: 'C',
+    testId: 'weather-widget-rainy',
     getPConnect: createMockPConnect({
-      '.Temperature': '18',
-      '.WeatherCondition': 'Rainy',
-      '.CurrentTime': '11:00'
-    }),
-    heading: 'Weather Widget',
-    temperature: '18',
-    weatherCondition: 'Rainy',
-    currentTime: '11:00'
+      '.WeatherLocation': 'London, UK',
+      '.WeatherTemperature': 12,
+      '.WeatherCondition': 'Light Rain',
+      '.WeatherHumidity': 89
+    })
   }
 };
