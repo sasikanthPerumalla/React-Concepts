@@ -1,35 +1,61 @@
 {
   "name": "MyOrg_MyLibrary_WeatherWidget",
   "label": "Weather Widget",
-  "description": "A weather widget displaying current conditions and a 4-day forecast with static data",
+  "description": "A simple weather display component showing temperature, condition, location, and humidity",
   "organization": "MyOrg",
   "version": "1.0.0",
   "library": "MyLibrary",
   "componentKey": "MyOrg_MyLibrary_WeatherWidget",
   "allowedApplications": [],
   "type": "Widget",
-  "subtype": ["CASE","PAGE"],
-  "icon": "auto",
+  "subtype": "CASE",
+  "icon": "cloud",
   "properties": [
     {
       "name": "heading",
-      "label": "Widget Heading",
+      "label": "Heading",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "locationProperty",
+      "label": "Location Property",
       "format": "TEXT"
     },
     {
-      "name": "temperature",
-      "label": "Current Temperature",
+      "name": "temperatureProperty",
+      "label": "Temperature Property",
       "format": "TEXT"
     },
     {
-      "name": "weatherCondition",
-      "label": "Weather Condition",
+      "name": "conditionProperty",
+      "label": "Condition Property",
       "format": "TEXT"
     },
     {
-      "name": "currentTime",
-      "label": "Current Time",
+      "name": "humidityProperty",
+      "label": "Humidity Property",
       "format": "TEXT"
+    },
+    {
+      "name": "temperatureUnit",
+      "label": "Temperature Unit",
+      "format": "SELECT",
+      "source": [
+        {
+          "key": "C",
+          "value": "Celsius"
+        },
+        {
+          "key": "F",
+          "value": "Fahrenheit"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visible",
+      "format": "VISIBILITY"
     },
     {
       "label": "Advanced",
