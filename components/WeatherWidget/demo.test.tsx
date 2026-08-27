@@ -3,95 +3,89 @@ import WeatherWidget from './WeatherWidget';
 import createMockPConnect from './mock';
 
 describe('WeatherWidget', () => {
-  it('renders the current temperature', () => {
+  it('renders with default weather data', () => {
     render(
       <WeatherWidget
+        heading="Current Weather"
         getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
       />
     );
-    expect(screen.getByText(/30/)).toBeInTheDocument();
+
+    expect(screen.getByText('Current Weather')).toBeInTheDocument();
+    expect(screen.getByText('San Francisco, CA')).toBeInTheDocument();
+    expect(screen.getByText('22°C')).toBeInTheDocument();
+    expect(screen.getByText('Partly Cloudy')).toBeInTheDocument();
+    expect(screen.getByText('65%')).toBeInTheDocument();
   });
 
-  it('renders the weather condition text', () => {
+  it('renders with Fahrenheit unit', () => {
     render(
       <WeatherWidget
+        heading="Weather"
+        temperatureUnit="F"
         getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
       />
     );
-    expect(screen.getByText('Clear day')).toBeInTheDocument();
+
+    expect(screen.getByText('72°F')).toBeInTheDocument();
   });
 
-  it('renders the current time', () => {
+  it('renders placeholder when no data is available', () => {
     render(
       <WeatherWidget
+        heading="Weather"
         getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
       />
     );
-    expect(screen.getByText('07:20')).toBeInTheDocument();
+
+    expect(screen.getByText('--')).toBeInTheDocument();
+    expect(screen.getByText('Unknown Location')).toBeInTheDocument();
   });
 
-  it('renders all forecast days', () => {
+  it('renders with custom test ID', () => {
     render(
       <WeatherWidget
+        heading="Weather"
+        testId="custom-weather-test"
         getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
       />
     );
-    expect(screen.getByText('THU')).toBeInTheDocument();
-    expect(screen.getByText('FRI')).toBeInTheDocument();
-    expect(screen.getByText('SAT')).toBeInTheDocument();
-    expect(screen.getByText('SUN')).toBeInTheDocument();
+
+    expect(screen.getByTestId('custom-weather-test')).toBeInTheDocument();
   });
 
-  it('renders temperature ranges for forecast days', () => {
+  it('renders humidity display correctly', () => {
     render(
       <WeatherWidget
+        heading="Weather"
         getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
       />
     );
-    const tempRanges = screen.getAllByText('18/20');
-    expect(tempRanges).toHaveLength(4);
+
+    expect(screen.getByText('89%')).toBeInTheDocument();
   });
 
-  it('renders with custom temperature', () => {
+  it('reads from custom property paths', () => {
+    const getPConnect = createMockPConnect({
+      '.CustomLocation': 'Tokyo, Japan',
+      '.CustomTemp': 28,
+      '.CustomCondition': 'Clear Sky',
+      '.CustomHumidity': 55
+    });
     render(
       <WeatherWidget
+        heading="Tokyo Weather"
+        locationProperty=".CustomLocation"
+        temperatureProperty=".CustomTemp"
+        conditionProperty=".CustomCondition"
+        humidityProperty=".CustomHumidity"
         getPConnect={getPConnect}
-        temperature="42"
-        weatherCondition="Sunny"
-        currentTime="14:30"
       />
     );
-    expect(screen.getByText(/42/)).toBeInTheDocument();
-    expect(screen.getByText('Sunny')).toBeInTheDocument();
-    expect(screen.getByText('14:30')).toBeInTheDocument();
-  });
 
-  it('renders with a test ID when provided', () => {
-    const getPConnect = createMockPConnect();
-    render(
-      <WeatherWidget
-        getPConnect={getPConnect}
-        temperature="30"
-        weatherCondition="Clear day"
-        currentTime="07:20"
-        testId="weather-widget-test"
-      />
-    );
-    expect(screen.getByTestId('weather-widget-test')).toBeInTheDocument();
+    expect(screen.getByText('Tokyo, Japan')).toBeInTheDocument();
+    expect(screen.getByText('28°C')).toBeInTheDocument();
+    expect(screen.getByText('Clear Sky')).toBeInTheDocument();
+    expect(screen.getByText('55%')).toBeInTheDocument();
   });
 });
