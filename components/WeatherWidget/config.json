@@ -1,0 +1,55 @@
+{
+  "name": "MyOrg_MyLibrary_WeatherWidget",
+  "label": "Weather Widget",
+  "description": "A weather widget displaying current conditions and a 4-day forecast with static data",
+  "organization": "MyOrg",
+  "version": "1.0.0",
+  "library": "MyLibrary",
+  "componentKey": "MyOrg_MyLibrary_WeatherWidget",
+  "allowedApplications": [],
+  "type": "Widget",
+  "subtype": ["CASE","PAGE"],
+  "icon": "auto",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Widget Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "temperature",
+      "label": "Current Temperature",
+      "format": "TEXT"
+    },
+    {
+      "name": "weatherCondition",
+      "label": "Weather Condition",
+      "format": "TEXT"
+    },
+    {
+      "name": "currentTime",
+      "label": "Current Time",
+      "format": "TEXT"
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "Weather Widget",
+    "detailFVLItem": true,
+    "isFormWidth": false,
+    "isContainerWidth": false
+  }
+}
