@@ -1,9 +1,9 @@
 const createMockPConnect = (overrides: Record<string, any> = {}) => {
   const values: Record<string, any> = {
-    '.Temperature': '30',
-    '.WeatherCondition': 'Clear day',
-    '.CurrentTime': '07:20',
-    '.Heading': 'Weather Widget',
+    '.WeatherLocation': 'San Francisco, CA',
+    '.WeatherTemperature': 22,
+    '.WeatherCondition': 'Partly Cloudy',
+    '.WeatherHumidity': 65,
     ...overrides
   };
 
@@ -15,12 +15,7 @@ const createMockPConnect = (overrides: Record<string, any> = {}) => {
     getListData: () => [],
     getCaseInfo: () => ({}),
     getStateProps: () => ({}),
-    getConfigProps: () => ({
-      heading: values['.Heading'],
-      temperature: values['.Temperature'],
-      weatherCondition: values['.WeatherCondition'],
-      currentTime: values['.CurrentTime']
-    }),
+    getConfigProps: () => ({}),
     resolveConfigProps: (val: any) => val
   });
 };
