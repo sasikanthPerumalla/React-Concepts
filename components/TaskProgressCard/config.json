@@ -1,0 +1,69 @@
+{
+  "name": "Acme_UILib_TaskProgressCard",
+  "label": "Task Progress Card",
+  "description": "A visually rich task card showing due date, title, assigned operator with avatar, and a progress bar.",
+  "organization": "Acme",
+  "version": "1.0.0",
+  "library": "UILib",
+  "componentKey": "Acme_UILib_TaskProgressCard",
+  "allowedApplications": [],
+  "type": "Widget",
+  "subtype": "CASE",
+  "icon": "clipboard-check",
+  "properties": [
+    {
+      "name": "dueDate",
+      "label": "Due Date",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "taskTitle",
+      "label": "Task Title",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "assignedTo",
+      "label": "Assigned To",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "assignedToAvatarUrl",
+      "label": "Assigned To Avatar URL",
+      "format": "TEXT"
+    },
+    {
+      "name": "progressPercent",
+      "label": "Progress Percent",
+      "format": "NUMBER",
+      "required": true
+    },
+    {
+      "name": "visibility",
+      "label": "Visible",
+      "format": "VISIBILITY"
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "detailFVLItem": true,
+    "isFormWidth": false,
+    "isContainerWidth": false
+  }
+}
